@@ -1,6 +1,7 @@
 package com.study.notice;
 
-public class NoticeDTO {
+import lombok.Data;
+
 	@Data
 	public class NoticeDTO {
 	  private int    noticeno     ;
@@ -12,4 +13,4 @@ public class NoticeDTO {
 	  private String rdate        ;
 	 
 	}
-}
+
