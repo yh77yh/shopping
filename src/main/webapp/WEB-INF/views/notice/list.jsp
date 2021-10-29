@@ -6,11 +6,11 @@
 <!DOCTYPE html> 
 <html> 
 <head>
-  <title>Bootstrap Example</title>
+  <title>공지사항</title>
   <meta charset="utf-8">
    <script type="text/javascript">
      function read(noticeno){
-       var url = "read";
+       var url = "${root}/notice/read";
        url += "?noticeno="+noticeno;
        url += "&col=${col}";
        url += "&word=${word}";
@@ -25,7 +25,7 @@
 <div class="container">
  
    <h2>공지 사항</h2>
-  <form class="form-inline" action="./list">
+  <form class="form-inline" action="list">
     <div class="form-group">
       <select class="form-control" name="col">
         <option value="wname"
@@ -50,7 +50,7 @@
       name="word" value="${word}">
     </div>
     <button type="submit" class="btn btn-default" >검색</button>
-    <button type="button" class="btn btn-default" onclick="location.href='./create'">등록</button>
+    <button type="button" class="btn btn-default" onclick="location.href='/admin/notice/create'">등록</button>
   </form>
   
   <table class="table table-striped">

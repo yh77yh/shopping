@@ -78,9 +78,9 @@
 						data-toggle="dropdown" href="#">community <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="${root}/member/mypage">Mypage</a></li>
-							<li><a href="${root}/review/list">Review</a></li>
-							<li><a href="${root}/notice">Notice</a></li>
-							<li><a href="#">Q&A</a></li>
+							<li><a href="#">Review</a></li>
+							<li><a href="${root}/notice/list">Notice</a></li>
+							<li><a href="${root}/chat">문의하기</a></li>
 						</ul></li>
 					<li><a id="grade"><span class="glyphicon glyphicon-grain"></span>
 							${str}</a></li>
@@ -114,6 +114,7 @@
 						</c:otherwise>
 					</c:choose>
 
+
 				</ul>
 			</div>
 		</nav>
@@ -122,3 +123,4 @@
 
 </body>
 </html>
+

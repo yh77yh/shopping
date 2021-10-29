@@ -1,10 +1,7 @@
 package com.study.notice;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,24 +22,24 @@ public class NoticeController {
 	  @Qualifier("com.study.notice.NoticeServiceImpl")
 	  private NoticeService service;
 	
-	  @GetMapping("create")
+	  @GetMapping("/admin/notice/create")
 	  public String create() {
 	 
-	    return "/create";
+	    return "/admin/notice/create";
 	  }
 	 
-	  @PostMapping("create")
+	  @PostMapping("/admin/notice/create")
 	  public String create(NoticeDTO dto) {
 	 
 	    if (service.create(dto) == 1) {
-	      return "redirect:list";
+	      return "redirect:/notice/list";
 	    } else {
-	      return "/error";
+	      return "/admin/notice/error";
 	    }
 	 
 	  }
 	 
-	  @RequestMapping("list")
+	  @RequestMapping("/notice/list") //요청경로
 	  public String list(HttpServletRequest request) {
 	    // 검색관련------------------------
 	    String col = Utility.checkNull(request.getParameter("col"));
@@ -83,6 +80,84 @@ public class NoticeController {
 	    request.setAttribute("paging", paging);
 	 
 	    // view페이지 리턴
-	    return "/list";
+	    return "/notice/list";
 	  }
-	}
+	  @GetMapping("/notice/read")
+	  public String read(int noticeno,Model model) {
+	    
+	    service.upCnt(noticeno);
+	    
+	    NoticeDTO dto = service.read(noticeno);
+	    
+	    String content = dto.getContent().replaceAll("\r\n", "<br>");
+	    
+	    dto.setContent(content);
+	    
+	    model.addAttribute("dto",dto);
+	    
+	    return "/notice/read";
+	  }
+	  
+	  @GetMapping("/admin/notice/update")
+	  public String update(int noticeno, Model model) {
+	    
+	    model.addAttribute("dto", service.read(noticeno));
+	 
+	    return "/admin/notice/update";
+	  }
+	 
+	  @PostMapping("/admin/notice/update")
+	  public String update(NoticeDTO dto) {
+	 
+	    Map map = new HashMap();
+	    map.put("noticeno", dto.getNoticeno());
+	    map.put("passwd", dto.getPasswd());
+	    int pcnt = service.passwd(map);
+	    
+	    int cnt = 0;
+	    if (pcnt==1) {
+	      
+	      cnt = service.update(dto);
+	    }
+	 
+	    if (pcnt != 1) {
+	      return "./passwdError";
+	    } else if (cnt==1) {
+	      return "redirect:/notice/list";
+	    } else {
+	      return "./error";
+	    }
+	 
+	  }
+	 
+	  @GetMapping("/admin/notice/delete")
+	  public String delete() {
+	 
+	 
+	    return "/admin/notice/delete";
+	  }
+	  
+	  @PostMapping("/admin/notice/delete")
+	  public String delete(HttpServletRequest request, int noticeno, String passwd) {
+	 
+	    Map map = new HashMap();
+	    map.put("noticeno", noticeno);
+	    map.put("passwd", passwd);
+	    int pcnt = service.passwd(map);
+	    
+	    int cnt = 0;
+	    if (pcnt==1) {
+	      
+	      cnt = service.delete(noticeno);
+	    }
+	 
+	    if (pcnt != 1) {
+	      return "./passwdError";
+	    } else if (cnt==1) {
+	      return "redirect:/notice/list";
+	    } else {
+	      return "./error";
+	    }
+	 
+	  }
+}

@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="address1" column="address1" />
 		<result property="address2" column="address2" />
 		<collection property="list" column="id" javaType="List"
-			ofType="com.study.orders.OdersDTO" resultMap="orderList" />
+			ofType="com.study.orders.OrdersDTO" resultMap="orderList" />
 	</resultMap>
 	<resultMap type="com.study.orders.OrdersDTO" id="orderList">
 		<result property="orderno" column="orderno" />
